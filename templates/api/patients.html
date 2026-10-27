@@ -1,0 +1,9 @@
+{% extends "api/base.html" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<div class="page-heading"><p class="crumb">Workspace / Patients</p><h1>Patients</h1><p class="muted">Add and manage your patient records.</p></div>
+<div class="two-col">
+  <section class="card"><h2>Add a patient</h2><form method="post">{% csrf_token %}{% for field in form %}<div class="form-row"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}{{ field.errors }}</div>{% endfor %}<button class="btn" type="submit">Save patient</button></form></section>
+  <section class="card"><h2>Your patient list</h2>{% if patients %}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>API URL</th><th>Actions</th></tr></thead><tbody>{% for patient in patients %}<tr><td>{{ patient.id }}</td><td>{{ patient.name }}</td><td>{{ patient.age }}</td><td>{{ patient.gender }}</td><td><a href="{% url 'patient-detail' patient.pk %}">/api/patients/{{ patient.id }}/</a></td><td class="row-actions"><a href="{% url 'patient-edit' patient.pk %}">Edit</a><form class="inline-form" method="post" action="{% url 'patient-delete' patient.pk %}" onsubmit="return confirm('Delete this patient and their assignments?')">{% csrf_token %}<button class="btn danger" type="submit">Delete</button></form></td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty">No patient records yet.</p>{% endif %}</section>
+</div>
+{% endblock %}

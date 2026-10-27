@@ -1,0 +1,6 @@
+{% extends "api/base.html" %}
+{% block title %}Edit {{ kind }}{% endblock %}
+{% block content %}
+<p class="crumb"><a href="{% if kind == 'patient' %}{% url 'patients-page' %}{% else %}{% url 'doctors-page' %}{% endif %}">Back to {{ kind }} list</a></p>
+<section class="card" style="max-width:700px"><h1>Edit {{ kind }}</h1><p class="muted">Update details for {{ record_name }}.</p><form method="post" style="margin-top:22px">{% csrf_token %}{% for field in form %}<div class="form-row"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}<div class="actions"><button class="btn" type="submit">Save changes</button><a class="btn secondary" href="{% if kind == 'patient' %}{% url 'patients-page' %}{% else %}{% url 'doctors-page' %}{% endif %}">Cancel</a></div></form></section>
+{% endblock %}

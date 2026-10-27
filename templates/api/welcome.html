@@ -1,0 +1,24 @@
+{% extends "api/auth_base.html" %}
+{% block title %}Create your account{% endblock %}
+{% block body %}
+<main>
+  <div class="welcome-grid">
+    <section class="intro">
+      <span class="eyebrow">Your healthcare workspace</span>
+      <h1>Keep patient care organized.</h1>
+      <p>Create a secure account to manage patient records, browse doctors, and keep care assignments in one place.</p>
+      <div class="features"><div class="feature"><span class="check">✓</span><span>Your patient records stay private to your account.</span></div><div class="feature"><span class="check">✓</span><span>Assign doctors and review care connections.</span></div><div class="feature"><span class="check">✓</span><span>Sign in securely and manage your workspace.</span></div></div>
+    </section>
+    <section class="panel" aria-labelledby="signup-title">
+      <h2 id="signup-title">Create your account</h2>
+      <p class="panel-intro">It only takes a moment to get started.</p>
+      <form method="post" action="{% url 'welcome' %}">{% csrf_token %}
+        {% if form.non_field_errors %}<div class="error-summary" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+        {% for field in form %}<div class="row"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<span class="help">{{ field.help_text }}</span>{% endif %}{{ field.errors }}</div>{% endfor %}
+        <button class="btn" type="submit">Create account</button>
+      </form>
+      <p class="switch">Already have an account? <a href="{% url 'login-page' %}">Log in</a></p>
+    </section>
+  </div>
+</main>
+{% endblock %}

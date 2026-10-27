@@ -1,0 +1,19 @@
+{% extends "api/base.html" %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+<div class="page-heading"><p class="crumb">Your workspace</p><h1>Good to see you, {{ request.user.name|default:request.user.email }}</h1><p class="muted">Manage patient records, doctors, and care assignments from one place.</p></div>
+<div class="grid">
+  <section class="card"><span class="stat">Your patients<strong>{{ patient_count }}</strong></span><div class="actions"><a class="btn" href="{% url 'patients-page' %}">Manage patients</a></div></section>
+  <section class="card"><span class="stat">Doctors you added<strong>{{ doctor_count }}</strong></span><div class="actions"><a class="btn" href="{% url 'doctors-page' %}">Manage doctors</a></div></section>
+  <section class="card"><span class="stat">Doctor assignments<strong>{{ assignment_count }}</strong></span><div class="actions"><a class="btn" href="{% url 'mappings-page' %}">Manage assignments</a></div></section>
+</div>
+<section class="card" style="margin-top:20px">
+  <h2>Getting started</h2>
+  <p class="muted">Add a doctor and a patient, then connect them on the Assignments page. Use the navigation above whenever you need to return.</p>
+  <div class="actions"><a class="btn secondary" href="{% url 'doctors-page' %}">Add a doctor</a><a class="btn secondary" href="{% url 'patients-page' %}">Add a patient</a><a class="btn secondary" href="{% url 'mappings-page' %}">Assign a doctor</a></div>
+</section>
+<section class="card" style="margin-top:20px">
+  <h2>Recently added patients</h2>
+  {% if recent_patients %}<div class="table-wrap"><table><thead><tr><th>Name</th><th>Age</th><th>Gender</th></tr></thead><tbody>{% for patient in recent_patients %}<tr><td>{{ patient.name }}</td><td>{{ patient.age }}</td><td>{{ patient.gender }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="empty">No patients yet. Add your first patient to get started.</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "api/auth_base.html" %}
+{% block title %}Log in{% endblock %}
+{% block body %}
+<main class="login-main"><section class="panel">
+  <h2>Welcome back</h2><p class="panel-intro">Log in to continue to your CareDesk workspace.</p>
+  <form method="post">{% csrf_token %}<input type="hidden" name="next" value="{{ next }}">
+    {% if form.non_field_errors %}<div class="error-summary" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="row"><label for="{{ form.username.id_for_label }}">Email</label>{{ form.username }}{{ form.username.errors }}</div>
+    <div class="row"><label for="{{ form.password.id_for_label }}">Password</label>{{ form.password }}{{ form.password.errors }}</div>
+    <button class="btn" type="submit">Log in</button>
+  </form>
+  <div class="inline-links"><a href="{% url 'password-reset' %}">Forgot password?</a><span class="small">New here? <a href="{% url 'welcome' %}">Create an account</a></span></div>
+</section></main>
+{% endblock %}
